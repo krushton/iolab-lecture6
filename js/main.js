@@ -9,6 +9,7 @@
                 sort: 'relevance',
                 media: 'photos',
                 format: 'json',
+                per_page: 15,
                 content_type: 1,
                 nojsoncallback: 1
             };
@@ -18,14 +19,16 @@
                 data: dataObj,
                 dataType: 'json',
                 success: function(data) {
-                    var photos = data.photos.photo;
-                    for (var i = 0; i < 15; i++) {
-                        var photo = photos[i];
-                        var link = buildLink(photo.farm, photo.server, photo.id, photo.secret);
-                        var div = buildDiv(link, photo.title, photo.id);
-                        $('#gallery').append(div);                                    
+                    if (data.photos) {
+                        var photos = data.photos.photo;
+                        for (var i = 0; i < 15; i++) {
+                             var photo = photos[i];
+                             var link = buildLink(photo.farm, photo.server, photo.id, photo.secret);
+                             var div = buildDiv(link, photo.title, photo.id);
+                             $('#gallery').append(div);      
+                        }
+                                                     
                     }
-                    
                 }, 
                 error: function(xhr, e) {
                     console.log(e);
